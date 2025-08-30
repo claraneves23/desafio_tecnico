@@ -1,6 +1,7 @@
 package br.com.soc.sistema.vo;
 
 public class FuncionarioVo {
+	
 	private String rowid;
 	private String nome;	
 	

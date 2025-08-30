@@ -33,6 +33,7 @@ public class FuncionarioBusiness {
 		
 	}	
 	
+	
 	public List<FuncionarioVo> filtrarFuncionarios(FuncionarioFilter filter){
 		List<FuncionarioVo> funcionarios = new ArrayList<>();
 		
@@ -55,11 +56,24 @@ public class FuncionarioBusiness {
 	}
 	
 	public FuncionarioVo buscarFuncionarioPor(String codigo) {
+		System.out.println("DEBUG - Valor recebido em buscarFuncionarioPor: " + codigo);
 		try {
 			Integer cod = Integer.parseInt(codigo);
 			return dao.findByCodigo(cod);
 		}catch (NumberFormatException e) {
 			throw new BusinessException(FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO);
+		}
+	}
+	
+	
+	public void editarFuncionario(FuncionarioVo funcionarioVo) {
+		try {
+			if(funcionarioVo.getNome().isEmpty())
+				throw new IllegalArgumentException("Nome nao pode ser em branco");
+			
+			dao.updateFuncionario(funcionarioVo);
+		} catch (Exception e) {
+			throw new BusinessException("a função update não está funcionando");
 		}
 	}
 }

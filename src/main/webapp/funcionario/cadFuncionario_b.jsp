@@ -52,6 +52,7 @@
 								<td class="text-end">
 									<s:url action="editarFuncionarios" var="editar">
 										<s:param name="funcionarioVo.rowid" value="rowid"></s:param>
+										<s:param name="funcionarioVo.nome" value="nome"></s:param>
 									</s:url>
 
 									<a href="${editar}" class="btn btn-warning text-white">

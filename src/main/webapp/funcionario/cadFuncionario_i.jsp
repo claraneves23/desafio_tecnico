@@ -10,7 +10,7 @@
 	<body class="bg-secondary">
 
 		<div class="container">
-			<s:form action="/novoFuncionarios.action">
+			<s:form action="%{funcionarioVo.rowid == null ? 'novoFuncionarios' : 'atualizarFuncionarios'}">
 
 				<div class="card mt-5">
 					<div class="card-header">
@@ -21,7 +21,12 @@
 							</div>
 							
 							<div class="col-sm">
-								<h5 class="card-title">Novo Funcionário</h5>
+								 <s:if test="funcionarioVo.rowid == null || funcionarioVo.rowid == ''">
+        							Novo Funcionário
+    							</s:if>
+    							<s:else>
+        							Editar Funcionário
+    							</s:else>
 							</div>
 						</div>
 					</div>
@@ -33,7 +38,7 @@
 							</label>	
 
 							<div class="col-sm-2">
-								<s:textfield cssClass="form-control" id="id" name="funcionarioVo.rowid" readonly="true"/>							
+								<input type="text" class="form-control" id="id" name="funcionarioVo.rowid" value="<s:property value='funcionarioVo.rowid'/>" readonly="readonly"/>							
 							</div>	
 						</div>
 						

@@ -45,9 +45,29 @@ public class FuncionarioAction extends Action {
 		if(funcionarioVo.getRowid() == null)
 			return REDIRECT;
 		
-		funcionarioVo = business.buscarFuncionarioPor(funcionarioVo.getRowid());
+		System.out.println("DEBUG - Rowid vindo para preparar edição: " + funcionarioVo.getRowid());
+		FuncionarioVo funcionarioCompleto = business.buscarFuncionarioPor(funcionarioVo.getRowid());
+		
+		if (funcionarioCompleto != null) {
+			funcionarioVo.setNome(funcionarioCompleto.getNome());
+		}
 		
 		return INPUT;
+	}
+	
+	public String atualizar() {
+		
+		 System.out.println("DEBUG - Rowid 1 atualizar: " + funcionarioVo.getRowid());
+		 System.out.println("DEBUG - Nome  1 atualizar: " + funcionarioVo.getNome());
+		    
+		if(funcionarioVo.getRowid() == null || funcionarioVo.getNome() == null) {
+			return REDIRECT;
+		}
+		
+		System.out.println("DEBUG - Rowid 2 vindo da edição: " + funcionarioVo.getRowid());
+		System.out.println("DEBUG - Rowid 2 vindo da edição: " + funcionarioVo.getNome());
+		business.editarFuncionario(funcionarioVo);
+		return REDIRECT;
 	}
 	
 	public List<OpcoesComboBuscar> getListaOpcoesCombo(){
