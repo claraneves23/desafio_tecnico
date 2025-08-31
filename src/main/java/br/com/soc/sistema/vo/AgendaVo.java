@@ -2,26 +2,28 @@ package br.com.soc.sistema.vo;
 
 public class AgendaVo {
 	
-	private String id_agenda;
+	private String idAgenda;
 	private String nomeAgenda;
 	private String periodoDisponivel;
 	
 	public AgendaVo() {}
-	
-	public AgendaVo(String id_agenda, String nomeAgenda, String periodoDisponivel) {
-		this.id_agenda = id_agenda;
+
+
+	public AgendaVo(String idAgenda, String nomeAgenda, String periodoDisponivel) {
+		this.idAgenda = idAgenda;
 		this.nomeAgenda = nomeAgenda;
 		this.periodoDisponivel = periodoDisponivel;
 	}
 	
-	public String getId_agenda() {
-		return id_agenda;
+	public String getIdAgenda() {
+		return idAgenda;
 	}
 
-	public void setId_agenda(String id_agenda) {
-		this.id_agenda = id_agenda;
+	public void setIdAgenda(String idAgenda) {
+		this.idAgenda = idAgenda;
 	}
-
+	
+	
 	public String getNomeAgenda() {
 		return nomeAgenda;
 	}

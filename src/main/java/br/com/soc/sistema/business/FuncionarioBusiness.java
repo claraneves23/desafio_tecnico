@@ -56,7 +56,6 @@ public class FuncionarioBusiness {
 	}
 	
 	public FuncionarioVo buscarFuncionarioPor(String codigo) {
-		System.out.println("DEBUG - Valor recebido em buscarFuncionarioPor: " + codigo);
 		try {
 			Integer cod = Integer.parseInt(codigo);
 			return dao.findByCodigo(cod);
