@@ -9,7 +9,7 @@ import java.util.Collections;
 import java.util.List;
 
 import br.com.soc.sistema.vo.AgendaVo;
-import br.com.soc.sistema.vo.FuncionarioVo;
+
 
 public class AgendaDao extends Dao{
 	

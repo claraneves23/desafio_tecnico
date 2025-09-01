@@ -25,6 +25,9 @@ public class AgendaAction extends Action {
 		if(agendaVo.getNomeAgenda() == null)
 			return INPUT;
 		
+		if(agendaVo.getPeriodoDisponivel() == null)
+			return INPUT;
+		
 		business.salvarAgenda(agendaVo);
 		
 		return REDIRECT;

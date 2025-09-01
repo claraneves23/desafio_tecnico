@@ -35,7 +35,7 @@
 					
 					<div class="card-body">
 						<div class="row align-items-center">
-							<label for="idAgenda" class="col-sm-1 col-form-label text-center">
+							<label for="idAgenda" class="col-sm-1 col-form-label text-center"> Código:
 							</label>	
 
 							<div class="col-sm-2">
