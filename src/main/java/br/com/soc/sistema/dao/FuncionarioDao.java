@@ -121,5 +121,20 @@ public class FuncionarioDao extends Dao {
 			}
 		
 	}
-
+	
+	public boolean existeFuncionarioPorId(String rowid) {
+		String query = "SELECT COUNT(*) FROM funcionario WHERE rowid = ?";
+		try (Connection con = getConexao();
+				PreparedStatement ps = con.prepareStatement(query)) {
+			ps.setString(1, rowid);
+			try(ResultSet rs = ps.executeQuery()){
+				if(rs.next()) {
+					return rs.getInt(1) > 0;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 return false;	
+	}
 }

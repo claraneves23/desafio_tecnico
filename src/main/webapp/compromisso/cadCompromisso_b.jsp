@@ -9,6 +9,11 @@
 </head>
 <body class="bg-secondary">	
     <div class="container">
+    <s:if test="hasActionErrors()">
+    	<div class="alert alert-danger">
+        	<s:actionerror/>
+   	 </div>
+	</s:if>
         <div class="row">
             <table class="table table-light table-striped align-middle">
                 <thead>
@@ -39,11 +44,10 @@
                                     <s:text name="label.editar"/>
                                 </a>
 
-                                <a href="#" class="btn btn-danger" data-bs-toggle="modal" 
-                                    data-bs-target="#confirmarExclusao" 
-                                    onclick="setExclusaoId('${idFuncionario}', '${idAgenda}', '${data}')">
-                                    <s:text name="label.excluir"/>
-                                </a>
+                               	<a href="#" class="btn btn-danger" 
+   									onclick="prepararExclusao('${idCompromisso}')">
+    								<s:text name="label.excluir"/>
+								</a>
                             </td>
                         </tr>
                     </s:iterator>
@@ -64,7 +68,7 @@
         </div>
     </div>
     
-    <div class="modal fade" id="confirmarExclusao" 
+<div class="modal fade" id="confirmarExclusao" 
         data-bs-backdrop="static" data-bs-keyboard="false"
         tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -93,16 +97,17 @@
           </div>
         </div>		    
       </div>
-    </div>
+ </div>  
     
     <script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
     <script>
-        function setExclusaoId(idFuncionario, idAgenda, data) {
-            var link = document.getElementById('linkExclusao');
-            link.href = link.href + '?compromissoVo.idFuncionario=' + idFuncionario + 
-                        '&compromissoVo.idAgenda=' + idAgenda + 
-                        '&compromissoVo.data=' + data;
+    function setExclusaoId(idCompromisso) {
+        var link = document.getElementById('linkExclusao');
+        if (link) {
+            link.href = 'excluirCompromissos?compromissoVo.idCompromisso=' + idCompromisso;
         }
-    </script>
+    }
+</script>
+    
 </body>
 </html>

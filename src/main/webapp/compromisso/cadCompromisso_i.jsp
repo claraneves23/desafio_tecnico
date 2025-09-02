@@ -12,6 +12,12 @@
     <div class="container">
         <s:form action="%{compromissoVo.idCompromisso == null ? 'salvarCompromissos' : 'atualizarCompromissos'}">
 
+			<s:if test="hasActionErrors()">
+    			<div class="alert alert-danger">
+        			<s:actionerror/>
+    		</div>
+			</s:if>
+
             <div class="card mt-5">
                 <div class="card-header">
                     <div class="row">

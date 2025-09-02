@@ -128,4 +128,20 @@ public class AgendaDao extends Dao{
 			}
 		
 	}
+	
+	public boolean existeAgendaPorId(String idAgenda) {
+		String query = "SELECT COUNT(*) FROM agenda WHERE id_agenda = ?";
+		try (Connection con = getConexao();
+				PreparedStatement ps = con.prepareStatement(query)) {
+			ps.setString(1, idAgenda);
+			try(ResultSet rs = ps.executeQuery()){
+				if(rs.next()) {
+					return rs.getInt(1) > 0;
+				}
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		 return false;	
+	}
 }

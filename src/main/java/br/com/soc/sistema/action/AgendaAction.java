@@ -39,7 +39,7 @@ public class AgendaAction extends Action {
 			return REDIRECT;
 		
 		System.out.println("DEBUG - IDAGENDA editar: " + agendaVo.getIdAgenda());
-		AgendaVo agendaCompleta = business.buscarAgendaPor(agendaVo.getIdAgenda());
+		AgendaVo agendaCompleta = business.buscarAgendaPorId(agendaVo.getIdAgenda());
 		
 		if (agendaCompleta != null) {
 			agendaVo.setNomeAgenda(agendaCompleta.getNomeAgenda());

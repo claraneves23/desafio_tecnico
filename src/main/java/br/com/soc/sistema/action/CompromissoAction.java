@@ -6,6 +6,7 @@ import java.util.List;
 import br.com.soc.sistema.business.AgendaBusiness;
 import br.com.soc.sistema.business.CompromissoBusiness;
 import br.com.soc.sistema.business.FuncionarioBusiness;
+import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.infra.Action;
 import br.com.soc.sistema.vo.AgendaVo;
 import br.com.soc.sistema.vo.CompromissoVo;
@@ -37,17 +38,104 @@ public class CompromissoAction extends Action{
     }
 	
 	public String salvar() {
-		System.out.format("Salvando compromisso: ID=%s, Agenda=%s, Funcionario=%s", compromissoVo.getIdCompromisso(), 
-                compromissoVo.getIdAgenda(), 
-                compromissoVo.getIdFuncionario());
-		if(!(business.validarCamposObrigatorios(compromissoVo)))
-			return INPUT;
-		
-		business.salvarCompromisso(compromissoVo);
-		
-		return REDIRECT;
-	}
+	    try {
+	        if (!(business.validarCamposObrigatorios(compromissoVo))) {
+	        	funcionarios.addAll(funcionarioBusiness.trazerTodosOsFuncionarios());
+	 	        agendas.addAll(agendaBusiness.trazerTodasAsAgendas());
+	 	        
+	 	        compromissoVo.setIdCompromisso(null);
+	 	        addActionError("Campos obrigatórios não preenchidos");
+	            return INPUT;
+	        }
 
+	        System.out.println("Horário recebido: '" + compromissoVo.getHorario() + "'");
+	        business.salvarCompromisso(compromissoVo);
+	        compromissos = business.trazerTodosOsCompromissos();
+	        return SUCCESS;
+	        
+	    } catch (BusinessException e) {
+	    	
+	        funcionarios.addAll(funcionarioBusiness.trazerTodosOsFuncionarios());
+	        agendas.addAll(agendaBusiness.trazerTodasAsAgendas());
+	        compromissoVo.setIdCompromisso(null);
+	        addActionError(e.getMessage());
+	        return INPUT;
+	    }
+	}
+	
+	public String editar() {
+		
+		if(compromissoVo.getIdCompromisso() == null)
+			return REDIRECT;
+		
+		
+		funcionarios.addAll(funcionarioBusiness.trazerTodosOsFuncionarios());
+	    agendas.addAll(agendaBusiness.trazerTodasAsAgendas());
+	    
+		CompromissoVo compromissoCompleto = business.buscarCompromissoPorId(compromissoVo.getIdCompromisso());
+		System.out.println("Compromisso encontrado em editar: " + compromissoCompleto);
+		
+		if (compromissoCompleto != null) {
+			compromissoVo.setIdFuncionario(compromissoCompleto.getIdFuncionario());
+			compromissoVo.setIdAgenda(compromissoCompleto.getIdAgenda());
+			compromissoVo.setData(compromissoCompleto.getData());
+			 String horarioBanco = compromissoCompleto.getHorario();
+		        if (horarioBanco != null && horarioBanco.length() == 8) {
+		            compromissoVo.setHorario(horarioBanco.substring(0, 5));
+		        } else {
+		            compromissoVo.setHorario(horarioBanco);
+		        }
+		        compromissoVo.setIdCompromisso(compromissoCompleto.getIdCompromisso()); 
+		}
+		
+		return INPUT;
+	}
+	
+	public String atualizar() {
+		
+		try {
+			if(!business.validarCamposObrigatorios(compromissoVo)) {
+				funcionarios.addAll(funcionarioBusiness.trazerTodosOsFuncionarios());
+	            agendas.addAll(agendaBusiness.trazerTodasAsAgendas());
+	            addActionError("Campos obrigatórios não preenchidos");
+
+				return INPUT;
+			}
+			
+			 System.out.println("Horário recebido em atualizar: '" + compromissoVo.getHorario() + "'");
+			 business.editarCompromisso(compromissoVo);
+			 return REDIRECT;
+			 
+		} catch (BusinessException e) {
+			funcionarios.addAll(funcionarioBusiness.trazerTodosOsFuncionarios());
+		    agendas.addAll(agendaBusiness.trazerTodasAsAgendas());
+			addActionError(e.getMessage());
+			
+			 return INPUT;
+		}
+		
+		
+	}
+	
+	public String excluir() {
+		
+		 try {
+		        String idCompromisso = compromissoVo.getIdCompromisso();
+		        
+		        if (idCompromisso == null || idCompromisso.trim().isEmpty()) {
+		            addActionError("Nenhum compromisso selecionado para exclusão");
+		            return REDIRECT;
+		        }
+		        
+		        business.excluirCompromisso(idCompromisso);
+		        addActionMessage("Compromisso " + idCompromisso + " excluído com sucesso!");
+		        
+		    } catch (BusinessException e) {
+		        addActionError(e.getMessage());
+		    }
+		 return REDIRECT;
+	}
+	
 	public List<CompromissoVo> getCompromissos() {
 		return compromissos;
 	}

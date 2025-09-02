@@ -37,7 +37,7 @@ public class AgendaBusiness {
 	}
 	
 	
-	public AgendaVo buscarAgendaPor(String codigo) {
+	public AgendaVo buscarAgendaPorId(String codigo) {
 		try {
 			Integer cod = Integer.parseInt(codigo);
 			return dao.findByCodigo(cod);
@@ -57,7 +57,7 @@ public class AgendaBusiness {
 			
 			dao.updateAgenda(agendaVo);
 		} catch (Exception e) {
-			throw new BusinessException("a função update não está funcionando");
+			throw new BusinessException("Não foi possível realizar a inclusão do registro");
 		}
 	}
 	
