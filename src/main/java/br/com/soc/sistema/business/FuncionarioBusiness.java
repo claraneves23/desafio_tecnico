@@ -6,6 +6,7 @@ import java.util.List;
 import br.com.soc.sistema.dao.FuncionarioDao;
 import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.filter.FuncionarioFilter;
+import br.com.soc.sistema.vo.AgendaVo;
 import br.com.soc.sistema.vo.FuncionarioVo;
 
 public class FuncionarioBusiness {
@@ -73,6 +74,46 @@ public class FuncionarioBusiness {
 			dao.updateFuncionario(funcionarioVo);
 		} catch (Exception e) {
 			throw new BusinessException("a função update não está funcionando");
+		}
+	}
+	
+	public void excluirFuncionario(String rowid) {
+	    try {
+	        if (rowid == null || rowid.trim().isEmpty()) {
+	            throw new BusinessException("ID do funcionario não informado");
+	        }
+	        
+	       try {
+	            Long.parseLong(rowid); 
+	        } catch (NumberFormatException e) {
+	            throw new BusinessException("ID do funcionario inválido");
+	        }
+	        
+	 
+	        if (Long.parseLong(rowid) <= 0) {
+	            throw new BusinessException("ID do funcionario inválido");
+	        }
+	        
+	        if(!funcionarioExiste(rowid)) {
+	        	throw new BusinessException("Funcionario não encontrado");
+	        }
+	     
+	        dao.excluirFuncionario(rowid);
+	        
+	    } catch (BusinessException e) {
+	        throw e;
+	    } catch (Exception e) {
+	        throw new BusinessException("Não foi possível excluir o compromisso");
+	    }
+	}
+	
+	private boolean funcionarioExiste(String rowid) {
+		try {
+			 FuncionarioVo funcionarioVo = dao.findByCodigo(Integer.parseInt(rowid));
+			 return funcionarioVo != null;
+			
+		} catch (Exception e) {
+			return false;
 		}
 	}
 }

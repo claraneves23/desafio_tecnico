@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.soc.sistema.business.AgendaBusiness;
+import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.infra.Action;
 import br.com.soc.sistema.vo.AgendaVo;
 
@@ -23,10 +24,13 @@ public class AgendaAction extends Action {
 	
 	public String nova() {
 		if(agendaVo.getNomeAgenda() == null)
-			return INPUT;
+		{
+			 return INPUT;
+		}
 		
-		if(agendaVo.getPeriodoDisponivel() == null)
+		if(agendaVo.getPeriodoDisponivel() == null) {
 			return INPUT;
+		}
 		
 		business.salvarAgenda(agendaVo);
 		
@@ -60,6 +64,24 @@ public class AgendaAction extends Action {
 		
 		business.editarAgenda(agendaVo);
 		return REDIRECT;
+	}
+	
+	public String excluir() {
+		
+		 try {
+		        String idAgenda = agendaVo.getIdAgenda();
+		        if (idAgenda == null || idAgenda.trim().isEmpty()) {
+		        		return REDIRECT;
+		        }
+		        
+		        System.out.println("Entrou em excluir");
+		        System.out.print("DEBUG EXCLUIR: " + agendaVo.getIdAgenda() + agendaVo.getNomeAgenda() + agendaVo.getPeriodoDisponivel());
+		        business.excluirAgenda(idAgenda);
+		        
+		    } catch (BusinessException e) {
+		        addActionError(e.getMessage());
+		    }
+		 return REDIRECT;
 	}
 	
 	

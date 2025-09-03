@@ -48,7 +48,6 @@ public class CompromissoAction extends Action{
 	            return INPUT;
 	        }
 
-	        System.out.println("Horário recebido: '" + compromissoVo.getHorario() + "'");
 	        business.salvarCompromisso(compromissoVo);
 	        compromissos = business.trazerTodosOsCompromissos();
 	        return SUCCESS;
@@ -79,13 +78,8 @@ public class CompromissoAction extends Action{
 			compromissoVo.setIdFuncionario(compromissoCompleto.getIdFuncionario());
 			compromissoVo.setIdAgenda(compromissoCompleto.getIdAgenda());
 			compromissoVo.setData(compromissoCompleto.getData());
-			 String horarioBanco = compromissoCompleto.getHorario();
-		        if (horarioBanco != null && horarioBanco.length() == 8) {
-		            compromissoVo.setHorario(horarioBanco.substring(0, 5));
-		        } else {
-		            compromissoVo.setHorario(horarioBanco);
-		        }
-		        compromissoVo.setIdCompromisso(compromissoCompleto.getIdCompromisso()); 
+			compromissoVo.setHorario(compromissoCompleto.getHorario());
+		    compromissoVo.setIdCompromisso(compromissoCompleto.getIdCompromisso()); 
 		}
 		
 		return INPUT;
@@ -123,12 +117,10 @@ public class CompromissoAction extends Action{
 		        String idCompromisso = compromissoVo.getIdCompromisso();
 		        
 		        if (idCompromisso == null || idCompromisso.trim().isEmpty()) {
-		            addActionError("Nenhum compromisso selecionado para exclusão");
 		            return REDIRECT;
 		        }
 		        
 		        business.excluirCompromisso(idCompromisso);
-		        addActionMessage("Compromisso " + idCompromisso + " excluído com sucesso!");
 		        
 		    } catch (BusinessException e) {
 		        addActionError(e.getMessage());

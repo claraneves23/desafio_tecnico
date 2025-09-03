@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.vo.FuncionarioVo;
 
 public class FuncionarioDao extends Dao {
@@ -123,9 +124,9 @@ public class FuncionarioDao extends Dao {
 	}
 	
 	public boolean existeFuncionarioPorId(String rowid) {
-		String query = "SELECT COUNT(*) FROM funcionario WHERE rowid = ?";
+		StringBuilder query = new StringBuilder("SELECT COUNT(*) FROM funcionario WHERE rowid = ?");
 		try (Connection con = getConexao();
-				PreparedStatement ps = con.prepareStatement(query)) {
+				PreparedStatement ps = con.prepareStatement(query.toString())) {
 			ps.setString(1, rowid);
 			try(ResultSet rs = ps.executeQuery()){
 				if(rs.next()) {
@@ -137,4 +138,18 @@ public class FuncionarioDao extends Dao {
 		}
 		 return false;	
 	}
+	
+	public void excluirFuncionario(String rowid) {
+		StringBuilder query = new StringBuilder("DELETE FROM funcionario WHERE rowid = ?");
+		
+		try(Connection con = getConexao();
+				PreparedStatement ps = con.prepareStatement(query.toString())) {
+				
+				ps.setString(1, rowid);
+				ps.executeUpdate();
+				
+			} catch (SQLException e) {
+				throw new BusinessException("Erro ao excluir agenda: " + e.getMessage());
+			}
+		}
 }

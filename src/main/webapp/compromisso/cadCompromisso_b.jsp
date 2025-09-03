@@ -45,7 +45,7 @@
                                 </a>
 
                                	<a href="#" class="btn btn-danger" 
-   									onclick="prepararExclusao('${idCompromisso}')">
+   									onclick="prepararExclusao('${idCompromisso}', 'compromisso')">
     								<s:text name="label.excluir"/>
 								</a>
                             </td>
@@ -83,31 +83,21 @@
             <span><s:text name="label.modal.corpo.compromisso"/></span>
           </div>
           
-          <div class="modal-footer">
-            <a class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
-                <s:text name="label.nao"/>
-            </a>
-            
-            <s:url action="excluirCompromissos" var="excluir">
-                <s:param name="compromissoVo.idCompromisso" value=""/>
-            </s:url>
-            <a id="linkExclusao" href="${excluir}" class="btn btn-primary" style="width: 75px;">
-                <s:text name="label.sim"/>
-            </a>						
-          </div>
+         <div class="modal-footer">
+    		<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+        		<s:text name="label.nao"/>
+    		</button>
+    
+    		<a id="linkExclusao" href="#" class="btn btn-primary" style="width: 75px;">
+        		<s:text name="label.sim"/>
+    		</a>						
+		</div>
         </div>		    
       </div>
  </div>  
     
     <script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-    <script>
-    function setExclusaoId(idCompromisso) {
-        var link = document.getElementById('linkExclusao');
-        if (link) {
-            link.href = 'excluirCompromissos?compromissoVo.idCompromisso=' + idCompromisso;
-        }
-    }
-</script>
+    <script src="js/exclusao-modal.js"></script>
     
 </body>
 </html>

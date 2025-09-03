@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import br.com.soc.sistema.business.FuncionarioBusiness;
+import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.filter.FuncionarioFilter;
 import br.com.soc.sistema.infra.Action;
 import br.com.soc.sistema.infra.OpcoesComboBuscar;
@@ -52,6 +53,25 @@ public class FuncionarioAction extends Action {
 		}
 		
 		return INPUT;
+	}
+	
+	public String excluir() {
+		
+		 try {
+		        String rowid = funcionarioVo.getRowid();
+		        if (rowid == null || rowid.trim().isEmpty()) {
+		        		return REDIRECT;
+		        }
+		        
+		        System.out.println("Entrou em excluir funcionarios, id: "
+		        		+ rowid);
+		        
+		        business.excluirFuncionario(rowid);;
+		        
+		    } catch (BusinessException e) {
+		        addActionError(e.getMessage());
+		    }
+		 return REDIRECT;
 	}
 	
 	public String atualizar() {

@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import br.com.soc.sistema.exception.BusinessException;
 import br.com.soc.sistema.vo.AgendaVo;
 
 
@@ -53,36 +54,7 @@ public class AgendaDao extends Dao{
 		return Collections.emptyList();
 	}
 	
-//	public List<AgendaVo> findAllByNome(String nome){
-//		StringBuilder query = new StringBuilder("SELECT id_agenda, nm_agenda, pd_disponivel FROM agenda ")
-//								.append("WHERE lower(nm_agenda) like lower(?)");
-//		
-//		try(Connection con = getConexao();
-//			PreparedStatement ps = con.prepareStatement(query.toString())){
-//			int i = 1;
-//			
-//			ps.setString(i, "%"+nome+"%");
-//			
-//			try(ResultSet rs = ps.executeQuery()){
-//				AgendaVo agendaVo =  null;
-//				List<AgendaVo> agendas = new ArrayList<>();
-//				
-//				while (rs.next()) {
-//					 agendaVo = new AgendaVo();
-//					 agendaVo.setIdAgenda(rs.getString("id_agenda"));
-//					 agendaVo.setNomeAgenda(rs.getString("nm_agena"));
-//					 agendaVo.setPeriodoDisponivel(rs.getString("pd_disponivel"));
-//					
-//					agendas.add(agendaVo);
-//				}
-//				return agendas;
-//			}
-//		}catch (SQLException e) {
-//			e.printStackTrace();
-//		}		
-//		return Collections.emptyList();
-//	}
-//	
+
 	public AgendaVo findByCodigo(Integer codigo){
 		StringBuilder query = new StringBuilder("SELECT id_agenda, nm_agenda, pd_disponivel FROM agenda ")
 								.append("WHERE id_agenda = ?");
@@ -130,9 +102,9 @@ public class AgendaDao extends Dao{
 	}
 	
 	public boolean existeAgendaPorId(String idAgenda) {
-		String query = "SELECT COUNT(*) FROM agenda WHERE id_agenda = ?";
+		StringBuilder query = new StringBuilder ("SELECT COUNT(*) FROM agenda WHERE id_agenda = ?");
 		try (Connection con = getConexao();
-				PreparedStatement ps = con.prepareStatement(query)) {
+				PreparedStatement ps = con.prepareStatement(query.toString())) {
 			ps.setString(1, idAgenda);
 			try(ResultSet rs = ps.executeQuery()){
 				if(rs.next()) {
@@ -144,4 +116,22 @@ public class AgendaDao extends Dao{
 		}
 		 return false;	
 	}
+	
+	public void excluirAgenda(String idAgenda) {
+		StringBuilder query = new StringBuilder("DELETE FROM agenda WHERE id_agenda = ?");
+		
+		try(Connection con = getConexao();
+				PreparedStatement ps = con.prepareStatement(query.toString())) {
+				
+				ps.setString(1, idAgenda);
+				ps.executeUpdate();
+				
+			} catch (SQLException e) {
+				if(e.getMessage().contains("referential integrity constraint")) {
+					throw new BusinessException("Não é possível excluir agenda com compromissos cadastrados");
+				}
+				throw new BusinessException("Erro ao excluir agenda: " + e.getMessage());
+			}
+		}
+	
 }

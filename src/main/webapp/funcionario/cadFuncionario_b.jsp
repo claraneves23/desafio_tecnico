@@ -59,9 +59,13 @@
 										<s:text name="label.editar"/>
 									</a>
 
-									<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#confirmarExclusao">
+								
+									<a href="#" class="btn btn-danger" data-bs-toggle="modal" 
+										data-bs-target="#confirmarExclusao" 
+										onclick="prepararExclusao('${rowid}', 'funcionario')">
 										<s:text name="label.excluir"/>
 									</a>
+									
 								</td>
 							</tr>
 						</s:iterator>
@@ -102,18 +106,18 @@
 		      </div>
 		      
 		      <div class="modal-footer">
-	        	<a class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
-					<s:text name="label.nao"/>
-				</a>
-	        	
-				<s:a id="excluir" class="btn btn-primary" style="width: 75px;">
+	        	<s:url action="excluirFuncionarios" var="excluir">
+					<s:param name="funcionarioVo.rowid" value=""/>
+				</s:url>
+				<a id="linkExclusao" href="${excluir}" class="btn btn-primary" style="width: 75px;">
 					<s:text name="label.sim"/>
-				</s:a>						
+				</a>						
 		      </div>
 		    </div>		    
 		  </div>
 		</div>
 		
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+		<script src="js/exclusao-modal.js"></script>
 	</body>
 </html>

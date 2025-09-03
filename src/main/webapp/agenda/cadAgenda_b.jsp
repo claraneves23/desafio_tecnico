@@ -9,33 +9,8 @@
 	</head>
 	<body class="bg-secondary">	
 		<div class="container">
-			<%--
-			<div class="row mt-5 mb-2">
-				<div class="col-sm p-0">
-					<s:form action="/filtrarAgendas.action">
-						<div class="input-group">
-							<span class="input-group-text">
-								<strong><s:text name="label.buscar.por"/></strong>
-							</span>	
-								<s:select  
-									cssClass="form-select" 
-									name="filtrar.opcoesCombo" 
-									list="listaOpcoesCombo"  
-									headerKey=""  
-									headerValue="%{getText('label.escolha')}" 
-									listKey="%{codigo}" 
-									listValueKey="%{descricao}"
-									value="filtrar.opcoesCombo.codigo"									
-								/>
-								
-								<s:textfield cssClass="form-control" id="valorBusca" name="filtrar.valorBusca"/>
-								<button class="btn btn-primary" type="submit"><s:text name="label.pesquisar"/></button>
-						</div>
-					</s:form>			
-				</div>				
-			</div>
---%>
 			<div class="row">
+
 				<table class="table table-light table-striped align-middle">
 					<thead>
 						<tr>
@@ -60,10 +35,12 @@
 									<a href="${editar}" class="btn btn-warning text-white">
 										<s:text name="label.editar"/>
 									</a>
+									
+								
 
 									<a href="#" class="btn btn-danger" data-bs-toggle="modal" 
 										data-bs-target="#confirmarExclusao" 
-										onclick="setExclusaoId('${idAgenda}')">
+										onclick="prepararExclusao('${idAgenda}', 'agenda')">
 										<s:text name="label.excluir"/>
 									</a>
 								</td>
@@ -122,6 +99,6 @@
 		</div>
 		
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-		
+		<script src="js/exclusao-modal.js"></script>
 	</body>
 </html>
