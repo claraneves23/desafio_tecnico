@@ -17,14 +17,26 @@ public class RelatorioBusiness {
 	
 	public List<RelatorioCompromissoVo> gerarRelatorio(LocalDate dataInicial, LocalDate dataFinal){
 		if(dataInicial == null || dataFinal == null) {
-			throw new BusinessException("Data inicial e data final são obrigatórias");
-		}
-		
-		if(dataFinal.isBefore(dataInicial)) {
+			throw new BusinessException("Data inicial e data final são obrigatórias");		}
+				if(dataFinal.isBefore(dataInicial)) {
 			throw new BusinessException("Data final não pode ser anterior à data inicial");
 		}
 		
-		return dao.gerarRelatorioPorPeriodo(dataInicial, dataFinal);
+     	return dao.gerarRelatorioPorPeriodo(dataInicial, dataFinal);
 	}
+	
+	  public List<RelatorioCompromissoVo> gerarRelatorio(String dataInicialStr, String dataFinalStr){
+	        LocalDate dataInicial = null;
+	        LocalDate dataFinal = null;
+	        
+	        try {
+	            dataInicial = LocalDate.parse(dataInicialStr);
+	            dataFinal = LocalDate.parse(dataFinalStr);
+	        } catch (Exception e) {
+	            throw new BusinessException("Formato de data inválido. Use o formato yyyy-MM-dd");
+	        }
+	        
+	        return gerarRelatorio(dataInicial, dataFinal);
+	    }
 
 }

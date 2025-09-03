@@ -1,7 +1,7 @@
 package br.com.soc.sistema.action;
 
+import java.io.InputStream;
 import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.struts2.ServletActionContext;
@@ -18,27 +18,28 @@ public class RelatorioAction extends Action {
 	private RelatorioFilter filtro = new RelatorioFilter();
 	private List<RelatorioCompromissoVo> relatorio;
 	private RelatorioBusiness business = new RelatorioBusiness();
-	private String formato;
+	private InputStream inputStream;
 	
 	public String relatorio() {
 		return INPUT;
 	}
 	
-	public String gerarRelatorio() {
+	public String gerar() {
+		
+		System.out.println("A action gerar existe");
 		if(!filtro.isValid()) {
 			addActionError("Período inválido. Verifique as datas");
 			return INPUT;
 		}
 		
 		try {
-			relatorio = business.gerarRelatorio(filtro.getDataInicial(), filtro.getDataFinal());
+			relatorio = business.gerarRelatorio(
+					filtro.converterParaLocalDate(filtro.getDataInicial()),
+					filtro.converterParaLocalDate(filtro.getDataFinal())
+					);
 			
 			if (relatorio.isEmpty()) {
 				addActionMessage("Nenhum compromisso encontrado para o periodo selecione");
-			}
-			
-			if ("excel".equals(formato)) {
-				return "excel";
 			}
 			
 			return SUCCESS;
@@ -49,9 +50,10 @@ public class RelatorioAction extends Action {
 		}
 	}
 
-	public String exportarExcel() {
+	public String exportar() {
 		try {
-			relatorio = business.gerarRelatorio(filtro.getDataInicial(), filtro.getDataFinal());
+			relatorio = business.gerarRelatorio(filtro.converterParaLocalDate(filtro.getDataInicial()),
+					filtro.converterParaLocalDate(filtro.getDataFinal()));
 			
 			byte[] excelBytes = ExcelGenerator.generateExcel(relatorio);
 			HttpServletResponse response = ServletActionContext.getResponse();
@@ -82,6 +84,11 @@ public class RelatorioAction extends Action {
 	public void setRelatorio(List<RelatorioCompromissoVo> relatorio) {
 		this.relatorio = relatorio;
 	}
+
+	public InputStream getInputStream() {
+		return inputStream;
+	}
+
 	
 	
 }

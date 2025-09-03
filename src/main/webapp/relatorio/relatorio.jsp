@@ -14,7 +14,8 @@
                 <h3>Relatório de Compromissos por Período</h3>
             </div>
             <div class="card-body">
-                <s:form action="gerarRelatorio" method="POST">
+                <!-- ÚNICO Formulário -->
+                <s:form id="relatorioForm" action="gerarRelatorios" method="POST">
                     <s:if test="hasActionErrors()">
                         <div class="alert alert-danger">
                             <s:actionerror/>
@@ -38,14 +39,15 @@
                         </div>
                     </div>
                     
+                    <!-- Botões lado a lado -->
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <button type="submit" name="formato" value="html" class="btn btn-primary">
+                            <button type="button" onclick="submitForm('gerarRelatorios')" class="btn btn-primary w-100">
                                 Gerar Relatório HTML
                             </button>
                         </div>
                         <div class="col-md-6">
-                            <button type="submit" name="formato" value="excel" class="btn btn-success">
+                            <button type="button" onclick="submitForm('exportarRelatorios')" class="btn btn-success w-100">
                                 Exportar para Excel
                             </button>
                         </div>
@@ -54,5 +56,7 @@
             </div>
         </div>
     </div>
+
+    <script src="js/form.js"></script>
 </body>
 </html>
