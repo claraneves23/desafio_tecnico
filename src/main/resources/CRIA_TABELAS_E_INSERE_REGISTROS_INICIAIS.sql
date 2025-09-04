@@ -3,7 +3,7 @@ INSERT INTO funcionario (nm_funcionario) VALUES ('João'), ('Maria'), ('José'),
 
 CREATE TABLE agenda (id_agenda bigint primary key auto_increment, nm_agenda VARCHAR(255), pd_disponivel VARCHAR(10));
 INSERT INTO agenda(nm_agenda, pd_disponivel) VALUES ('Pediatria', 'Manhã');
-INSERT INTO agenda(nm_agenda, pd_disponivel) VALUES ('Oftmalmo', 'Tarde');
+INSERT INTO agenda(nm_agenda, pd_disponivel) VALUES ('Oftalmo', 'Tarde');
 
 CREATE TABLE compromisso (
 	id_compromisso bigint primary key auto_increment, 
