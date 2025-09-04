@@ -26,7 +26,6 @@ public class RelatorioAction extends Action {
 	
 	public String gerar() {
 		
-		System.out.println("A action gerar existe");
 		if(!filtro.isValid()) {
 			addActionError("Período inválido. Verifique as datas");
 			return INPUT;

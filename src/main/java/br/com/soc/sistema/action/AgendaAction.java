@@ -42,7 +42,6 @@ public class AgendaAction extends Action {
 		if(agendaVo.getIdAgenda() == null)
 			return REDIRECT;
 		
-		System.out.println("DEBUG - IDAGENDA editar: " + agendaVo.getIdAgenda());
 		AgendaVo agendaCompleta = business.buscarAgendaPorId(agendaVo.getIdAgenda());
 		
 		if (agendaCompleta != null) {
@@ -54,13 +53,11 @@ public class AgendaAction extends Action {
 	}
 	
 	public String atualizar() {
-		System.out.println("DEBUG - IDAGENDA atualizar: " + agendaVo.getIdAgenda());
 		
 		if(agendaVo.getIdAgenda() == null || agendaVo.getNomeAgenda() == null || agendaVo.getPeriodoDisponivel() == null ) {
 			return REDIRECT;
 		}
 		
-		System.out.println("DEBUG - IDAGENDA atualizar: " + agendaVo.getIdAgenda());
 		
 		business.editarAgenda(agendaVo);
 		return REDIRECT;
@@ -74,8 +71,6 @@ public class AgendaAction extends Action {
 		        		return REDIRECT;
 		        }
 		        
-		        System.out.println("Entrou em excluir");
-		        System.out.print("DEBUG EXCLUIR: " + agendaVo.getIdAgenda() + agendaVo.getNomeAgenda() + agendaVo.getPeriodoDisponivel());
 		        business.excluirAgenda(idAgenda);
 		        
 		    } catch (BusinessException e) {

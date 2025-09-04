@@ -72,7 +72,6 @@ public class CompromissoAction extends Action{
 	    agendas.addAll(agendaBusiness.trazerTodasAsAgendas());
 	    
 		CompromissoVo compromissoCompleto = business.buscarCompromissoPorId(compromissoVo.getIdCompromisso());
-		System.out.println("Compromisso encontrado em editar: " + compromissoCompleto);
 		
 		if (compromissoCompleto != null) {
 			compromissoVo.setIdFuncionario(compromissoCompleto.getIdFuncionario());

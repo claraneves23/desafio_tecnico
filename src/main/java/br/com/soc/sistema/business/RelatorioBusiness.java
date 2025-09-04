@@ -25,18 +25,6 @@ public class RelatorioBusiness {
      	return dao.gerarRelatorioPorPeriodo(dataInicial, dataFinal);
 	}
 	
-	  public List<RelatorioCompromissoVo> gerarRelatorio(String dataInicialStr, String dataFinalStr){
-	        LocalDate dataInicial = null;
-	        LocalDate dataFinal = null;
-	        
-	        try {
-	            dataInicial = LocalDate.parse(dataInicialStr);
-	            dataFinal = LocalDate.parse(dataFinalStr);
-	        } catch (Exception e) {
-	            throw new BusinessException("Formato de data inválido. Use o formato yyyy-MM-dd");
-	        }
-	        
-	        return gerarRelatorio(dataInicial, dataFinal);
-	    }
+	 
 
 }
