@@ -4,17 +4,16 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Relatório de Compromissos</title>
+    <title><s:text name="titulo.relatorio"/></title>
     <link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 </head>
 <body class="bg-secondary">
     <div class="container mt-5">
         <div class="card">
             <div class="card-header">
-                <h3>Relatório de Compromissos por Período</h3>
+                <h3><s:text name="titulo.relatorio.periodo"/></h3>
             </div>
             <div class="card-body">
-                <!-- ÚNICO Formulário -->
                 <s:form id="relatorioForm" action="gerarRelatorios" method="POST">
                     <s:if test="hasActionErrors()">
                         <div class="alert alert-danger">
@@ -22,33 +21,28 @@
                         </div>
                     </s:if>
                     
-                    <s:if test="hasActionMessages()">
-                        <div class="alert alert-info">
-                            <s:actionmessage/>
-                        </div>
-                    </s:if>
                     
                     <div class="row mb-3">
                         <div class="col-md-6">
-                            <label class="form-label">Data Inicial:</label>
+                            <label class="form-label"><s:text name="label.data.inicial"/>:</label>
                             <s:textfield name="filtro.dataInicial" type="date" cssClass="form-control" required="true"/>
                         </div>
                         <div class="col-md-6">
-                            <label class="form-label">Data Final:</label>
+                            <label class="form-label"><s:text name="label.data.final"/>:</label>
                             <s:textfield name="filtro.dataFinal" type="date" cssClass="form-control" required="true"/>
                         </div>
                     </div>
                     
-                    <!-- Botões lado a lado -->
+
                     <div class="row mb-3">
                         <div class="col-md-6">
                             <button type="button" onclick="submitForm('gerarRelatorios')" class="btn btn-primary w-100">
-                                Gerar Relatório HTML
+                                <s:text name="btn.gerar.relatorio"/>
                             </button>
                         </div>
                         <div class="col-md-6">
                             <button type="button" onclick="submitForm('exportarRelatorios')" class="btn btn-success w-100">
-                                Exportar para Excel
+                                <s:text name="btn.exportar.excel"/>
                             </button>
                         </div>
                     </div>

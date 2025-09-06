@@ -68,6 +68,7 @@ public class RelatorioAction extends Action {
 		}
 	}
 	
+	
 	public RelatorioFilter getFiltro() {
 		return filtro;
 	}

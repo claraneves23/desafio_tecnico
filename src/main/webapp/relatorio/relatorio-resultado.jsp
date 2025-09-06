@@ -4,7 +4,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Relatório de Compromissos</title>
+    <title><s:text name="titulo.relatorio"/></title>
     <link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
     <style>
         @media print {
@@ -17,8 +17,13 @@
     <div class="container mt-5">
         <div class="card no-print">
             <div class="card-header">
-                <h3>Relatório de Compromissos</h3>
-                <p>Período: <s:property value="filtro.dataInicial"/> até <s:property value="filtro.dataFinal"/></p>
+                <h3><s:text name="titulo.relatorio"/></h3>
+                <p>
+                    <s:text name="msg.periodo">
+                        <s:param value="filtro.dataInicial"/>
+                        <s:param value="filtro.dataFinal"/>
+                    </s:text>
+                </p>
             </div>
         </div>
         
@@ -28,10 +33,10 @@
                     <table class="table table-striped">
                         <thead>
                             <tr>
-                                <th>Funcionário (Código/Nome)</th>
-                                <th>Agenda (Código/Nome)</th>
-                                <th>Data</th>
-                                <th>Hora</th>
+                                <th><s:text name="th.funcionario"/></th>
+                                <th><s:text name="th.agenda"/></th>
+                                <th><s:text name="th.data"/></th>
+                                <th><s:text name="th.hora"/></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -48,9 +53,13 @@
                 </div>
                 
                 <div class="no-print mt-3">
-                    <button onclick="window.print()" class="btn btn-primary">Imprimir</button>
-                    <s:url action="relatorio" var="voltar"/>
-                    <a href="${voltar}" class="btn btn-secondary">Voltar</a>
+                    <button onclick="window.print()" class="btn btn-primary">
+                        <s:text name="btn.imprimir"/>
+                    </button>
+                    <s:url action="relatorioRelatorios" var="voltar"/>
+                    <a href="${voltar}" class="btn btn-secondary">
+                        <s:text name="btn.voltar"/>
+                    </a>
                 </div>
             </div>
         </div>

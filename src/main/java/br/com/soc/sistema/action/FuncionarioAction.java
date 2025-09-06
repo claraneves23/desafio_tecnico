@@ -63,9 +63,6 @@ public class FuncionarioAction extends Action {
 		        		return REDIRECT;
 		        }
 		        
-		        System.out.println("Entrou em excluir funcionarios, id: "
-		        		+ rowid);
-		        
 		        business.excluirFuncionario(rowid);;
 		        
 		    } catch (BusinessException e) {

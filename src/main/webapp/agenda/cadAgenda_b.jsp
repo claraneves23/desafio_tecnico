@@ -67,36 +67,27 @@
 			</div>
 		</div>
 		
-		<div  class="modal fade" id="confirmarExclusao" 
-			data-bs-backdrop="static" data-bs-keyboard="false"
-			tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
-		    <div class="modal-content">
-		      <div class="modal-header">
-		        <h5 class="modal-title"><s:text name="label.modal.titulo.agenda"/></h5>
-		        
-		        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-		      </div>
-		      
-		      <div class="modal-body">
-		      	<span><s:text name="label.modal.corpo.agenda"/></span>
-		      </div>
-		      
-		      <div class="modal-footer">
-	        	<a class="btn btn-secondary" data-bs-dismiss="modal" aria-label="Close">
-					<s:text name="label.nao"/>
-				</a>
-	        	
-				<s:url action="excluirAgendas" var="excluir">
-					<s:param name="agendaVo.idAgenda" value=""/>
-				</s:url>
-				<a id="linkExclusao" href="${excluir}" class="btn btn-primary" style="width: 75px;">
+		<div class="modal fade" id="confirmarExclusao" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title"><s:text name="label.modal.titulo.agenda"/></h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+			<div class="modal-body">
+				<span><s:text name="label.modal.corpo.agenda"/></span>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+						<s:text name="label.nao"/>
+				</button>
+				<a id="linkExclusao" href="#" class="btn btn-danger" style="width: 75px;">
 					<s:text name="label.sim"/>
-				</a>						
-		      </div>
-		    </div>		    
-		  </div>
+				</a>
+			</div>
 		</div>
+	</div>
+</div>
 		
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
 		<script src="js/exclusao-modal.js"></script>
