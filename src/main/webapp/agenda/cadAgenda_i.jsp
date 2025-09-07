@@ -10,7 +10,14 @@
 	<body class="bg-secondary">
 
 		<div class="container">
-			<s:form action="%{agendaVo.idAgenda == null ? 'novaAgendas' : 'atualizarAgendas'}">
+		
+			<s:if test="hasActionErrors()">
+						<div class="alert alert-danger mt-3">
+							<s:actionerror/>
+						</div>
+			</s:if>
+			
+			<s:form action="%{agendaVo.idAgenda == null ? 'salvarAgendas' : 'atualizarAgendas'}">
 
 				
 				<div class="card mt-5">
@@ -78,8 +85,8 @@
 							<button class="btn btn-primary col-sm-4 offset-sm-1">
 								<s:text name="label.salvar"/>
 							</button>
-							<button type="reset" class="btn btn-secondary col-sm-4 offset-sm-2">
-								<s:text name="label.limpar.formulario"/>
+							<button type="button" class="btn btn-secondary col-sm-4 offset-sm-2" onclick="limparFormulario()">
+								<s:text name="label.limpar"/>
 							</button>
 						</div>
 					</div>
@@ -88,5 +95,6 @@
 		</div>
 		
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+		<script src="js/form.js"></script>
 	</body>
 </html>

@@ -50,7 +50,7 @@ public class CompromissoAction extends Action{
 
 	        business.salvarCompromisso(compromissoVo);
 	        compromissos = business.trazerTodosOsCompromissos();
-	        return SUCCESS;
+	        return REDIRECT;
 	        
 	    } catch (BusinessException e) {
 	    	

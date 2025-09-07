@@ -23,15 +23,16 @@ public class FuncionarioBusiness {
 	
 	public void salvarFuncionario(FuncionarioVo funcionarioVo) {
 		try {
-			if(funcionarioVo.getNome().isEmpty())
-				throw new IllegalArgumentException("Nome nao pode ser em branco");
-			
-			dao.insertFuncionario(funcionarioVo);
-		} catch (Exception e) {
-			throw new BusinessException("Nao foi possivel realizar a inclusao do registro");
-		}
-		
-	}	
+	        if(funcionarioVo.getNome() == null || funcionarioVo.getNome().trim().isEmpty())
+	            throw new IllegalArgumentException("Campos obrigatórios não preenchidos");
+	        
+	        dao.insertFuncionario(funcionarioVo);
+	    } catch (IllegalArgumentException e) {
+	        throw new BusinessException(e.getMessage());
+	    } catch (Exception e) {
+	        throw new BusinessException("Não foi possível realizar a inclusão do registro");
+	    }
+	}
 	
 	
 	public List<FuncionarioVo> filtrarFuncionarios(FuncionarioFilter filter){
@@ -41,7 +42,11 @@ public class FuncionarioBusiness {
 			case ID:
 				try {
 					Integer codigo = Integer.parseInt(filter.getValorBusca());
-					funcionarios.add(dao.findByCodigo(codigo));
+					FuncionarioVo funcionario = dao.findByCodigo(codigo);
+					if (funcionario != null) {
+						funcionarios.add(funcionario);
+					}
+					
 				}catch (NumberFormatException e) {
 					throw new BusinessException(FOI_INFORMADO_CARACTER_NO_LUGAR_DE_UM_NUMERO);
 				}
@@ -66,14 +71,16 @@ public class FuncionarioBusiness {
 	
 	
 	public void editarFuncionario(FuncionarioVo funcionarioVo) {
-		try {
-			if(funcionarioVo.getNome().isEmpty())
-				throw new IllegalArgumentException("Nome nao pode ser em branco");
-			
-			dao.updateFuncionario(funcionarioVo);
-		} catch (Exception e) {
-			throw new BusinessException("a função update não está funcionando");
-		}
+	    try {
+	        if(funcionarioVo.getNome() == null || funcionarioVo.getNome().trim().isEmpty())
+	            throw new IllegalArgumentException("Nome não pode ser em branco");
+	        
+	        dao.updateFuncionario(funcionarioVo);
+	    } catch (IllegalArgumentException e) {
+	        throw new BusinessException(e.getMessage());
+	    } catch (Exception e) {
+	        throw new BusinessException("Não foi possível atualizar o registro");
+	    }
 	}
 	
 	public void excluirFuncionario(String rowid) {

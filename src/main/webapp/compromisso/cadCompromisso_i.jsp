@@ -121,8 +121,8 @@
                         <button class="btn btn-primary col-sm-4 offset-sm-1">
                             <s:text name="label.salvar"/>
                         </button>
-                        <button type="reset" class="btn btn-secondary col-sm-4 offset-sm-2">
-                            <s:text name="label.limpar.formulario"/>
+                        <button type="button" class="btn btn-secondary col-sm-4 offset-sm-2" onclick="limparFormulario()">
+                            <s:text name="label.limpar"/>
                         </button>
                     </div>
                 </div>
@@ -131,5 +131,6 @@
     </div>
     
     <script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+    <script src="js/form.js"></script>
 </body>
 </html>

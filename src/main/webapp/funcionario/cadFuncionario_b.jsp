@@ -113,6 +113,6 @@
 </div>
 		
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
-		<script src="js/exclusao-modal.js"></script>
+		<script src="js/form.js"></script>
 	</body>
 </html>

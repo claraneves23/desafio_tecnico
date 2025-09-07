@@ -23,18 +23,29 @@ public class AgendaAction extends Action {
 	}
 	
 	public String nova() {
-		if(agendaVo.getNomeAgenda() == null)
-		{
-			 return INPUT;
-		}
 		
-		if(agendaVo.getPeriodoDisponivel() == null) {
-			return INPUT;
-		}
-		
-		business.salvarAgenda(agendaVo);
-		
-		return REDIRECT;
+		return INPUT;
+	}
+
+	public String salvar() {
+		try {
+			
+			if(agendaVo.getNomeAgenda() == null || agendaVo.getPeriodoDisponivel() == null)
+			{
+				agendaVo.setIdAgenda(null);
+				addActionError("Campos obrigatórios não preenchidos");
+				return INPUT;
+			}
+			
+			agendaVo.setIdAgenda(null);
+			business.salvarAgenda(agendaVo);
+			return REDIRECT;
+			
+		} catch (BusinessException e) {
+			agendaVo.setIdAgenda(null);
+	        addActionError(e.getMessage());
+	        return INPUT;
+	    }
 	}
 	
 	public String editar() {
@@ -53,14 +64,19 @@ public class AgendaAction extends Action {
 	}
 	
 	public String atualizar() {
-		
-		if(agendaVo.getIdAgenda() == null || agendaVo.getNomeAgenda() == null || agendaVo.getPeriodoDisponivel() == null ) {
-			return REDIRECT;
-		}
-		
-		
-		business.editarAgenda(agendaVo);
-		return REDIRECT;
+		 try {
+		        if(agendaVo.getIdAgenda() == null || agendaVo.getNomeAgenda() == null || agendaVo.getPeriodoDisponivel() == null) {
+		            addActionError("Campos obrigatórios não preenchidos");
+		            return INPUT;
+		        }
+		        
+		        business.editarAgenda(agendaVo);
+		        return REDIRECT;
+		        
+		    } catch (BusinessException e) {
+		        addActionError(e.getMessage());
+		        return INPUT;
+		    }
 	}
 	
 	public String excluir() {

@@ -20,20 +20,22 @@ public class AgendaBusiness {
 		return dao.findAllAgendas();
 	}	
 	
-	public void salvarAgenda(AgendaVo agendaVo) {
-		try {
-			if(agendaVo.getNomeAgenda().isEmpty())
-				throw new IllegalArgumentException("O nome da agenda nao pode ser em branco");
-			
-			if(agendaVo.getPeriodoDisponivel().isEmpty())
-				throw new IllegalArgumentException("O período disponível nao pode ser em branco");
-			
-			dao.insertAgenda(agendaVo);
-		} catch (Exception e) {
-			throw new BusinessException("Nao foi possivel realizar a inclusao do registro");
-		}
-		
-	}
+
+public void salvarAgenda(AgendaVo agendaVo) {
+    try {
+        if(agendaVo.getNomeAgenda() == null || agendaVo.getNomeAgenda().trim().isEmpty())
+            throw new IllegalArgumentException("O nome da agenda não pode ser em branco");
+        
+        if(agendaVo.getPeriodoDisponivel() == null || agendaVo.getPeriodoDisponivel().trim().isEmpty())
+            throw new IllegalArgumentException("O período disponível não pode ser em branco");
+        
+        dao.insertAgenda(agendaVo);
+    } catch (IllegalArgumentException e) {
+        throw new BusinessException(e.getMessage());
+    } catch (Exception e) {
+        throw new BusinessException("Não foi possível realizar a inclusão do registro");
+    }
+}
 	
 	
 	public AgendaVo buscarAgendaPorId(String codigo) {
@@ -45,24 +47,28 @@ public class AgendaBusiness {
 		}
 	}
 	
-	
 	public void editarAgenda(AgendaVo agendaVo) {
-		try {
-			 if(!agendaExiste(agendaVo.getIdAgenda())) {
-		        	throw new BusinessException("Agenda não encontrada");
-		     }
-			 
-			if(agendaVo.getNomeAgenda().isEmpty())
-				throw new IllegalArgumentException("Nome nao pode ser em branco");
-			
-			if(agendaVo.getPeriodoDisponivel().isEmpty())
-				throw new IllegalArgumentException("O período disponível nao pode ser em branco");
-			
-			dao.updateAgenda(agendaVo);
-		} catch (Exception e) {
-			throw new BusinessException("Não foi possível realizar a inclusão do registro");
-		}
+	    try {
+	        if(!agendaExiste(agendaVo.getIdAgenda())) {
+	            throw new BusinessException("Agenda não encontrada");
+	        }
+	        
+	        if(agendaVo.getNomeAgenda() == null || agendaVo.getNomeAgenda().trim().isEmpty())
+	            throw new IllegalArgumentException("Nome não pode ser em branco");
+	        
+	        if(agendaVo.getPeriodoDisponivel() == null || agendaVo.getPeriodoDisponivel().trim().isEmpty())
+	            throw new IllegalArgumentException("O período disponível não pode ser em branco");
+	        
+	        dao.updateAgenda(agendaVo);
+	    } catch (IllegalArgumentException e) {
+	        throw new BusinessException(e.getMessage());
+	    } catch (BusinessException e) {
+	        throw e;
+	    } catch (Exception e) {
+	        throw new BusinessException("Não foi possível atualizar o registro");
+	    }
 	}
+	
 	
 	public void excluirAgenda(String idAgenda) {
 	    try {

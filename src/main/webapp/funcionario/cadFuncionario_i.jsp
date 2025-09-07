@@ -8,9 +8,16 @@
 		<link rel='stylesheet' href='webjars/bootstrap/5.1.3/css/bootstrap.min.css'>
 	</head>
 	<body class="bg-secondary">
-
+		
 		<div class="container">
-			<s:form action="%{funcionarioVo.rowid == null ? 'novoFuncionarios' : 'atualizarFuncionarios'}">
+		
+		<s:if test="hasActionErrors()">
+					<div class="alert alert-danger mt-3">
+						<s:actionerror/>
+					</div>
+		</s:if>
+		
+			<s:form action="%{funcionarioVo.rowid == null ? 'salvarFuncionarios' : 'atualizarFuncionarios'}">
 
 				<div class="card mt-5">
 					<div class="card-header">
@@ -54,15 +61,20 @@
 					</div>
 
 					<div class="card-footer">
-						<div class="form-row">
-							<button class="btn btn-primary col-sm-4 offset-sm-1">Salvar</button>
-							<button type="reset" class="btn btn-secondary col-sm-4 offset-sm-2">Limpar Formulario</button>
-						</div>
-					</div>
+                    	<div class="form-row">
+                        	<button class="btn btn-primary col-sm-4 offset-sm-1">
+                            	<s:text name="label.salvar"/>
+                        </button>
+                        <button type="button" class="btn btn-secondary col-sm-4 offset-sm-2" onclick="limparFormulario()">
+                            <s:text name="label.limpar"/>
+                        </button>
+                    </div>
+                </div>
 				</div>
 			</s:form>			
 		</div>
 		
 		<script src="webjars/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+		<script src="js/form.js"></script>
 	</body>
 </html>

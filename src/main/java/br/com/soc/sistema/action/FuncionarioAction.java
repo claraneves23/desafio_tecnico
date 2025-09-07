@@ -34,12 +34,25 @@ public class FuncionarioAction extends Action {
 	}
 	
 	public String novo() {
-		if(funcionarioVo.getNome() == null)
-			return INPUT;
 		
-		business.salvarFuncionario(funcionarioVo);
-		
-		return REDIRECT;
+		return INPUT;
+	}
+	
+	public String salvar() {
+		try {
+	        if(funcionarioVo.getNome() == null || funcionarioVo.getNome().trim().isEmpty()) {
+	        	funcionarioVo.setRowid(null);
+	            addActionError("Campos obrigatórios não preenchidos");
+	            return INPUT;
+	        }
+	        
+	        business.salvarFuncionario(funcionarioVo);
+	        return REDIRECT;
+	        
+	    } catch (BusinessException e) {
+	        addActionError(e.getMessage());
+	        return INPUT;
+	    }
 	}
 	
 	public String editar() {
@@ -54,6 +67,23 @@ public class FuncionarioAction extends Action {
 		
 		return INPUT;
 	}
+	
+	public String atualizar() {
+		try {
+	        if(funcionarioVo.getRowid() == null || funcionarioVo.getNome() == null || funcionarioVo.getNome().trim().isEmpty()) {
+	            addActionError("Campos obrigatórios não preenchidos");
+	            return INPUT;
+	        }
+	        
+	        business.editarFuncionario(funcionarioVo);
+	        return REDIRECT;
+	        
+	    } catch (BusinessException e) {
+	        addActionError(e.getMessage());
+	        return INPUT;
+	    }
+	}
+	
 	
 	public String excluir() {
 		
@@ -71,14 +101,6 @@ public class FuncionarioAction extends Action {
 		 return REDIRECT;
 	}
 	
-	public String atualizar() {
-		if(funcionarioVo.getRowid() == null || funcionarioVo.getNome() == null) {
-			return REDIRECT;
-		}
-		
-		business.editarFuncionario(funcionarioVo);
-		return REDIRECT;
-	}
 	
 	public List<OpcoesComboBuscar> getListaOpcoesCombo(){
 		return Arrays.asList(OpcoesComboBuscar.values());
