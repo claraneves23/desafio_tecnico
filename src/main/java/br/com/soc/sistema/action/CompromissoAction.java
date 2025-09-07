@@ -96,7 +96,6 @@ public class CompromissoAction extends Action{
 				return INPUT;
 			}
 			
-			 System.out.println("Horário recebido em atualizar: '" + compromissoVo.getHorario() + "'");
 			 business.editarCompromisso(compromissoVo);
 			 return REDIRECT;
 			 

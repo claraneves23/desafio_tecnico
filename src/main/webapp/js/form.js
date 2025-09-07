@@ -1,5 +1,4 @@
 function prepararExclusao(id, tipo) {
-    console.log("Preparando exclusão do " + tipo + " ID: " + id);
     
     var link = document.getElementById('linkExclusao');
     if (link) {
@@ -31,7 +30,7 @@ function limparFormulario() {
     
     const inputs = document.querySelectorAll('input:not([readonly]), textarea:not([readonly])');
     inputs.forEach(input => {
-        // Limpar baseado no tipo do campo
+ 
         switch(input.type) {
             case 'text':
             case 'textarea':

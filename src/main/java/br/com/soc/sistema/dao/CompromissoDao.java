@@ -151,8 +151,7 @@ public class CompromissoDao extends Dao{
 	            ps.setString(i++, compromissoVo.getIdFuncionario());
 	            ps.setString(i++, compromissoVo.getIdAgenda());
 	            ps.setDate(i++, Date.valueOf(compromissoVo.getData()));
-	            
-	   
+	          
 	            String horario = compromissoVo.getHorario();
 	            if (horario != null && horario.length() == 5) {
 	                horario += ":00";
