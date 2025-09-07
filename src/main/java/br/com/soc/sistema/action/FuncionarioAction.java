@@ -46,10 +46,12 @@ public class FuncionarioAction extends Action {
 	            return INPUT;
 	        }
 	        
+	        funcionarioVo.setRowid(null);
 	        business.salvarFuncionario(funcionarioVo);
 	        return REDIRECT;
 	        
 	    } catch (BusinessException e) {
+	    	funcionarioVo.setRowid(null);
 	        addActionError(e.getMessage());
 	        return INPUT;
 	    }

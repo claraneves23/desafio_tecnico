@@ -109,7 +109,7 @@ public class CompromissoBusiness {
 		        throw e; 
 			
 		  } catch (Exception e) {
-			  throw new BusinessException("a função update não está funcionando");
+			  throw new BusinessException("Não foi possível fazer a inserção do registro");
 		  }
 	}
 	

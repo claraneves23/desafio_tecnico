@@ -48,15 +48,16 @@ public class CompromissoAction extends Action{
 	            return INPUT;
 	        }
 
+	        compromissoVo.setIdCompromisso(null);
 	        business.salvarCompromisso(compromissoVo);
 	        compromissos = business.trazerTodosOsCompromissos();
 	        return REDIRECT;
 	        
 	    } catch (BusinessException e) {
 	    	
+	    	compromissoVo.setIdCompromisso(null);
 	        funcionarios.addAll(funcionarioBusiness.trazerTodosOsFuncionarios());
 	        agendas.addAll(agendaBusiness.trazerTodasAsAgendas());
-	        compromissoVo.setIdCompromisso(null);
 	        addActionError(e.getMessage());
 	        return INPUT;
 	    }
