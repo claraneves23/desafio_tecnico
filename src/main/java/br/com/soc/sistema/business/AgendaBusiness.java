@@ -29,12 +29,17 @@ public void salvarAgenda(AgendaVo agendaVo) {
         if(agendaVo.getPeriodoDisponivel() == null || agendaVo.getPeriodoDisponivel().trim().isEmpty())
             throw new IllegalArgumentException("O período disponível não pode ser em branco");
         
-        dao.insertAgenda(agendaVo);
-    } catch (IllegalArgumentException e) {
-        throw new BusinessException(e.getMessage());
-    } catch (Exception e) {
-        throw new BusinessException("Não foi possível realizar a inclusão do registro");
-    }
+        if (existeAgendaDuplicada(agendaVo)) {
+            throw new BusinessException("Já existe uma agenda com este nome no mesmo período");
+        }
+        
+        	dao.insertAgenda(agendaVo);
+        	
+    	} catch (IllegalArgumentException e) {
+    		throw new BusinessException(e.getMessage());
+    	} catch (Exception e) {
+    		throw new BusinessException("Não foi possível realizar a inclusão do registro");
+    	}
 }
 	
 	
@@ -58,6 +63,10 @@ public void salvarAgenda(AgendaVo agendaVo) {
 	        
 	        if(agendaVo.getPeriodoDisponivel() == null || agendaVo.getPeriodoDisponivel().trim().isEmpty())
 	            throw new IllegalArgumentException("O período disponível não pode ser em branco");
+	        
+	        if (existeAgendaDuplicada(agendaVo)) {
+                throw new BusinessException("Já existe uma agenda com este nome no mesmo período");
+	        }
 	        
 	        dao.updateAgenda(agendaVo);
 	    } catch (IllegalArgumentException e) {
@@ -90,6 +99,7 @@ public void salvarAgenda(AgendaVo agendaVo) {
 	        if(!agendaExiste(idAgenda)) {
 	        	throw new BusinessException("Agenda não encontrada");
 	        }
+	        
 	     
 	        dao.excluirAgenda(idAgenda);
 	        
@@ -109,4 +119,14 @@ public void salvarAgenda(AgendaVo agendaVo) {
 			return false;
 		}
 	}
+	
+	 private boolean existeAgendaDuplicada(AgendaVo agendaVo) {
+	        try {
+	            return dao.existeAgendaDuplicada(agendaVo);
+	        } catch (Exception e) {
+	            return false;
+	        }
+	    }
+	
+	
 }

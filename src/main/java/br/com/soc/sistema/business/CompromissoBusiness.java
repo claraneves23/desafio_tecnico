@@ -54,6 +54,10 @@ public class CompromissoBusiness {
 				throw new BusinessException("Compromisso fora do período disponível da agenda");
 			}
 			
+			if (existeCompromissoDuplicado(compromissoVo)) {
+	                throw new BusinessException("Já existe um compromisso para este funcionário/agenda na mesma data e horário");
+	        }
+			
 	        dao.insertCompromisso(compromissoVo);
 	        
 		  } catch (BusinessException e) {
@@ -65,6 +69,8 @@ public class CompromissoBusiness {
 		
 	}
 	
+
+
 	public CompromissoVo buscarCompromissoPorId(String codigo) {
 		try {
 			Integer cod = Integer.parseInt(codigo);
@@ -102,6 +108,10 @@ public class CompromissoBusiness {
 			if(!validarPeriodoAgenda(compromissoVo)) {
 				throw new BusinessException("Compromisso fora do período disponível da agenda");
 			}
+			
+			if (existeCompromissoDuplicado(compromissoVo)) {
+	                throw new BusinessException("Já existe um compromisso para este funcionário/agenda na mesma data e horário");
+	        }
 			
 			dao.updateCompromisso(compromissoVo);
 			
@@ -193,4 +203,12 @@ public class CompromissoBusiness {
 			return false;
 		}
 	}
+	
+	 private boolean existeCompromissoDuplicado(CompromissoVo compromissoVo) {
+	        try {
+	            return dao.existeCompromissoDuplicado(compromissoVo);
+	        } catch (Exception e) {
+	            return false;
+	        }
+	    }
 }

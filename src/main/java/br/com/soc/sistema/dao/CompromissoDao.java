@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +27,7 @@ public class CompromissoDao extends Dao{
 				String horario = compromissoVo.getHorario();
 				ps.setTime(i++, java.sql.Time.valueOf(horario));
 				ps.executeUpdate();
+				
 			}catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -102,22 +104,15 @@ public class CompromissoDao extends Dao{
 				Connection con = getConexao();
 				PreparedStatement  ps = con.prepareStatement(query.toString())){
 				
-				  	System.out.println("DEBUG - Valores recebidos no DAO:");
-			        System.out.println("rowid: " + compromissoVo.getIdFuncionario());
-			        System.out.println("id_agenda: " + compromissoVo.getIdAgenda());
-			        System.out.println("data: " + compromissoVo.getData());
-			        System.out.println("horario: " + compromissoVo.getHorario());
-			        System.out.println("id_compromisso: " + compromissoVo.getIdCompromisso());
-				
-				
-				int i=1;
-				ps.setString(i++, compromissoVo.getIdFuncionario());
-				ps.setString(i++, compromissoVo.getIdAgenda());
-				ps.setDate(i++, Date.valueOf(compromissoVo.getData()));
-				String horario = compromissoVo.getHorario();
-				ps.setTime(i++, java.sql.Time.valueOf(horario));  
-				ps.setString(i++, compromissoVo.getIdCompromisso());
-				ps.executeUpdate();
+					int i=1;
+					ps.setString(i++, compromissoVo.getIdFuncionario());
+					ps.setString(i++, compromissoVo.getIdAgenda());
+					ps.setDate(i++, Date.valueOf(compromissoVo.getData()));
+					String horario = compromissoVo.getHorario();
+					ps.setTime(i++, java.sql.Time.valueOf(horario));  
+					ps.setString(i++, compromissoVo.getIdCompromisso());
+					ps.executeUpdate();
+					
 			}catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -137,6 +132,50 @@ public class CompromissoDao extends Dao{
 						e.printStackTrace();
 			}
 		}
+		
+		public boolean existeCompromissoDuplicado(CompromissoVo compromissoVo) throws Exception {
+	        StringBuilder query = new StringBuilder("SELECT COUNT(*) FROM compromisso ");
+	        	query.append("WHERE (rowid = ? OR id_agenda = ?) ");
+	        	query.append("AND data = ? ");
+	        	query.append("AND horario = ?");
+	        
+	   
+	        if (compromissoVo.getIdCompromisso() != null && !compromissoVo.getIdCompromisso().trim().isEmpty()) {
+	            query.append(" AND id_compromisso != ?");
+	        }
+	        
+	        try (Connection con = getConexao();
+	             PreparedStatement ps = con.prepareStatement(query.toString())) {
+	            
+	            int i = 1;
+	            ps.setString(i++, compromissoVo.getIdFuncionario());
+	            ps.setString(i++, compromissoVo.getIdAgenda());
+	            ps.setDate(i++, Date.valueOf(compromissoVo.getData()));
+	            
+	   
+	            String horario = compromissoVo.getHorario();
+	            if (horario != null && horario.length() == 5) {
+	                horario += ":00";
+	            }
+	            ps.setTime(i++, Time.valueOf(horario));
+	            
+	            if (compromissoVo.getIdCompromisso() != null && !compromissoVo.getIdCompromisso().trim().isEmpty()) {
+	                ps.setString(i++, compromissoVo.getIdCompromisso());
+	            }
+	            
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    return rs.getInt(1) > 0;
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        } catch (IllegalArgumentException e) {
+	           
+	            throw new Exception("Formato de horário inválido: " + compromissoVo.getHorario());
+	        }
+	        return false;
+	    }
 		
 		
 		

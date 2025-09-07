@@ -134,4 +134,35 @@ public class AgendaDao extends Dao{
 			}
 		}
 	
+	 public boolean existeAgendaDuplicada(AgendaVo agendaVo) {
+	        StringBuilder query = new StringBuilder("SELECT COUNT(*) FROM agenda ");
+	        query.append("WHERE UPPER(nm_agenda) = UPPER(?) ");
+	        query.append("AND pd_disponivel = ?");
+	       
+	        if (agendaVo.getIdAgenda() != null && !agendaVo.getIdAgenda().trim().isEmpty()) {
+	            query.append(" AND id_agenda != ?");
+	        }
+	        
+	        try (Connection con = getConexao();
+	             PreparedStatement ps = con.prepareStatement(query.toString())) {
+	            
+	            int i = 1;
+	            ps.setString(i++, agendaVo.getNomeAgenda().trim());
+	            ps.setString(i++, agendaVo.getPeriodoDisponivel());
+	            
+	            if (agendaVo.getIdAgenda() != null && !agendaVo.getIdAgenda().trim().isEmpty()) {
+	                ps.setString(i++, agendaVo.getIdAgenda());
+	            }
+	            
+	            try (ResultSet rs = ps.executeQuery()) {
+	                if (rs.next()) {
+	                    return rs.getInt(1) > 0;
+	                }
+	            }
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return false;
+	    }
+	
 }
