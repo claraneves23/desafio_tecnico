@@ -85,10 +85,7 @@ public class FuncionarioBusiness {
 	
 	public void excluirFuncionario(String rowid) {
 	    try {
-	        if (rowid == null || rowid.trim().isEmpty()) {
-	            throw new BusinessException("ID do funcionario não informado");
-	        }
-	        
+	       
 	       try {
 	            Long.parseLong(rowid); 
 	        } catch (NumberFormatException e) {

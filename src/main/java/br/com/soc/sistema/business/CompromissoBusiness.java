@@ -125,9 +125,6 @@ public class CompromissoBusiness {
 	
 	public void excluirCompromisso(String idCompromisso) {
 	    try {
-	        if (idCompromisso == null || idCompromisso.trim().isEmpty()) {
-	            throw new BusinessException("ID do compromisso não informado");
-	        }
 	        
 	       try {
 	            Long.parseLong(idCompromisso); 
